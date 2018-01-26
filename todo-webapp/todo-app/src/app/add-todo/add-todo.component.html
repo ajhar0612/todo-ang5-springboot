@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>New Bill</h1>
+
+<div mat-dialog-content class="container">
+
+  <form class="example-container" #todoForm="ngForm">
+
+    <mat-form-field class="form-control">
+      <input matInput placeholder="Title" type="text" id="title" required [(ngModel)]="title" name="title" autocomplete="off" />
+    </mat-form-field>
+
+  </form>
+
+</div>
+
+
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Cancel</button>
+  <button mat-button type="submit" [disabled]="!todoForm.form.valid || submitted" (click)="onSubmit(todoForm.value)">Add</button>
+</div>

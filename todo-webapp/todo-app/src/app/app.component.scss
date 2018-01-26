@@ -1,0 +1,19 @@
+.add-button {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.delete-button {
+  margin-left: auto;
+  margin-right: auto;
+  width: 140px;
+  display: block;
+}
+
+.completed-todo {
+  text-decoration: line-through;
+  background-color: #e0f2f1;
+}
