@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * <p>
- * Application bootstrap file responsible for starting
+ * Application bootstrap file responsible for starting the application.
  * </p>
  * @author ajhar.shaikh
  */

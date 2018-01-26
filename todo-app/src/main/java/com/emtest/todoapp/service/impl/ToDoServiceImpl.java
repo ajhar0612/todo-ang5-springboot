@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.emtest.todoapp.entity.ToDo;
+import com.emtest.todoapp.exception.ResourceNotFoundException;
 import com.emtest.todoapp.repository.ToDoRepository;
 import com.emtest.todoapp.service.ToDoService;
 
@@ -30,14 +31,14 @@ public class ToDoServiceImpl implements ToDoService {
 	}
 
 	@Override
-	public List<ToDo> updateAll(List<ToDo> todos) throws Exception {
+	public List<ToDo> updateAll(List<ToDo> todos) throws ResourceNotFoundException {
 		List<Long> toDoIdList = new ArrayList<Long>();
         for(ToDo item : todos) {
         		toDoIdList.add(item.getId());
         }
         List<ToDo> todoDataList = todoRepository.findAll(toDoIdList);
         if(todoDataList.size() != todos.size()) {
-            throw new Exception("Resource Not found");
+            throw new ResourceNotFoundException();
         }
         for(ToDo item : todoDataList) {
         		item.setCompleted(true);
@@ -47,10 +48,10 @@ public class ToDoServiceImpl implements ToDoService {
 	}
 
 	@Override
-	public void update(Long id) throws Exception {
+	public void delete(Long id) throws ResourceNotFoundException {
         ToDo todo =todoRepository.findOne(id);
         if(todo == null) {
-            throw new Exception("Resource Not found");
+            throw new ResourceNotFoundException();
         }
         todoRepository.delete(todo);
 	}

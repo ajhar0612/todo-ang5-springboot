@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.emtest.todoapp.entity.ToDo;
+import com.emtest.todoapp.exception.ResourceNotFoundException;
 import com.emtest.todoapp.service.ToDoService;
 
 @RestController
@@ -42,7 +43,7 @@ public class ToDoController {
 	public ResponseEntity<List<ToDo>> updateTodo(@Valid @RequestBody List<ToDo> todos) {
 		try {
 			return new ResponseEntity<>(toDoService.updateAll(todos), HttpStatus.OK);
-		} catch (Exception e) {
+		} catch (ResourceNotFoundException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
@@ -51,9 +52,9 @@ public class ToDoController {
 	public ResponseEntity<Void> deleteTodo(@PathVariable("id") Long id) {
 
 		try {
-			toDoService.update(id);
+			toDoService.delete(id);
 			return new ResponseEntity<Void>(HttpStatus.OK);
-		} catch (Exception e) {
+		} catch (ResourceNotFoundException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
