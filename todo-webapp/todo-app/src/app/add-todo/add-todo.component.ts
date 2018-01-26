@@ -7,6 +7,7 @@ import { MatDialogRef } from '@angular/material';
   styleUrls: ['./add-todo.component.scss']
 })
 export class AddTodoComponent {
+  title: string;
   submitted: boolean;
   constructor(public dialogRef: MatDialogRef<AddTodoComponent>) {}
 

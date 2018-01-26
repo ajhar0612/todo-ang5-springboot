@@ -32,29 +32,14 @@
       <mat-selection-list #todoNodeList>
         <ng-container *ngFor="let todo of todoList">
           <mat-list-option *ngIf="!showCompleted || (showCompleted && !todo.completed )" [value]="todo.id" [ngClass]="{ 'completed-todo': todo.completed }">
-            <!-- <mat-icon aria-label="completed">done</mat-icon> -->
             <span>{{todo.title}}</span>
           </mat-list-option>
         </ng-container>
       </mat-selection-list>
     </mat-card-content>
-
-    <!-- <mat-card-actions>
-      <p>
-        Options selected: {{todoNodeList.selectedOptions.selected.length}}
-      </p>
-      <button (click)="onMarkComplete(todoNodeList.selectedOptions.selected); todoNodeList.deselectAll();" mat-raised-button color="primary">
-        <mat-icon aria-label="Mark selected todo(s) completed">done</mat-icon>
-        Completed
-      </button>
-      <button (click)="onDelete(todoNodeList.selectedOptions.selected);" mat-raised-button color="warn">
-        <mat-icon aria-label="Deleted selected todo(s)">delete</mat-icon>
-        Delete
-      </button>
-    </mat-card-actions> -->
   </mat-card>
 
-  <button (click)="onAddClick($event)" mat-fab color="primary" class="add-button">
+  <button (click)="onAddClick()" mat-fab color="primary" class="add-button">
     <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
   </button>
 

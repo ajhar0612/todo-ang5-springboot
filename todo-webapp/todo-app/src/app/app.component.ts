@@ -12,8 +12,8 @@ import { ErrorBoxComponent } from './error-box/error-box.component';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  private todoList: ToDo[];
-  private showCompleted: boolean;
+  todoList: ToDo[];
+  showCompleted: boolean;
 
   constructor(public dialog: MatDialog, private api: ToDoAPIService) {}
 
@@ -21,19 +21,7 @@ export class AppComponent implements OnInit {
     this.loadData();
   }
 
-  private errorFn(e) {
-    const dialogRef = this.dialog.open(ErrorBoxComponent, {
-      width: '400px'
-    });
-
-    dialogRef.afterClosed().subscribe((data: ToDo) => this.loadData());
-  }
-
-  private loadData() {
-    this.api.list().subscribe(todoList => (this.todoList = todoList));
-  }
-
-  private onAddClick() {
+  onAddClick() {
     const dialogRef = this.dialog.open(AddTodoComponent, {
       width: '400px'
     });
@@ -47,11 +35,11 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private onChange(evt) {
+  onChange() {
     this.showCompleted = !this.showCompleted;
   }
 
-  private onMarkComplete(data: any[]) {
+  onMarkComplete(data: any[]) {
     const idList: number[] = data.map(item => item.value);
     const updateList: ToDo[] = [];
     this.todoList.forEach(todo => {
@@ -63,12 +51,24 @@ export class AppComponent implements OnInit {
     this.api.updateList(updateList).subscribe(todoList => {}, this.errorFn);
   }
 
-  private onDelete(data: any[]) {
+  onDelete(data: any[]) {
     const idList: number[] = data.map(item => item.value);
     this.todoList = this.todoList.filter(todo => {
       return idList.indexOf(todo.id) === -1;
     });
 
     this.api.deleteList(idList).subscribe(_ => {}, this.errorFn);
+  }
+
+  private errorFn(e) {
+    const dialogRef = this.dialog.open(ErrorBoxComponent, {
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe((data: ToDo) => this.loadData());
+  }
+
+  private loadData() {
+    this.api.list().subscribe(todoList => (this.todoList = todoList));
   }
 }
