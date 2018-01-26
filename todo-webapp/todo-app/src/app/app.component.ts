@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material';
 import { AddTodoComponent } from './add-todo/add-todo.component';
 import { ToDo } from './models/todo';
 import { ToDoAPIService } from './services/api/to-do.api.service';
+import { ErrorBoxComponent } from './error-box/error-box.component';
 
 @Component({
   selector: 'app-root',
@@ -21,9 +22,11 @@ export class AppComponent implements OnInit {
   }
 
   private errorFn(e) {
-    // TODO show message box to user
-    console.log('Error occurred!!');
-    this.loadData();
+    const dialogRef = this.dialog.open(ErrorBoxComponent, {
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe((data: ToDo) => this.loadData());
   }
 
   private loadData() {
@@ -31,7 +34,7 @@ export class AppComponent implements OnInit {
   }
 
   private onAddClick() {
-    const dialogRef = this.dialog.open(AddTodoComponent, {
+    const dialogRef = this.dialog.open(ErrorBoxComponent, {
       width: '400px'
     });
 

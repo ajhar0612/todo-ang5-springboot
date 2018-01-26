@@ -25,9 +25,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddTodoComponent } from './add-todo/add-todo.component';
 import { AppComponent } from './app.component';
 import { ToDoAPIService } from './services/api/to-do.api.service';
+import { ErrorBoxComponent } from './error-box/error-box.component';
 
 @NgModule({
-  declarations: [AppComponent, AddTodoComponent],
+  declarations: [AppComponent, AddTodoComponent, ErrorBoxComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
@@ -54,7 +55,7 @@ import { ToDoAPIService } from './services/api/to-do.api.service';
     MatDialogModule
   ],
   providers: [ToDoAPIService],
-  entryComponents: [AddTodoComponent],
+  entryComponents: [AddTodoComponent, ErrorBoxComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
