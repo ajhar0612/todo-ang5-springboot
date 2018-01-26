@@ -4,16 +4,30 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-
+/**
+ * <p>
+ * Entity class for ToDo Object.
+ * </p>
+ * @author ajhar.shaikh
+ */
 @Entity
 public class ToDo {
 	
+	/**
+	 * Unique id for TODO
+	 */
 	@Id
 	@GeneratedValue
 	private Long id;
 	
+	/**
+	 * Flag  for TODO's completion state.
+	 */
 	private Boolean completed;
 	
+	/**
+	 * Title of TODO
+	 */
 	private String title;
 	
 	public ToDo() {

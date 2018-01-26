@@ -24,7 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AddTodoComponent } from './add-todo/add-todo.component';
 import { AppComponent } from './app.component';
-import { ToDoService } from './services/api/to-do.service';
+import { ToDoAPIService } from './services/api/to-do.api.service';
 
 @NgModule({
   declarations: [AppComponent, AddTodoComponent],
@@ -53,7 +53,7 @@ import { ToDoService } from './services/api/to-do.service';
     MatToolbarModule,
     MatDialogModule
   ],
-  providers: [ToDoService],
+  providers: [ToDoAPIService],
   entryComponents: [AddTodoComponent],
   bootstrap: [AppComponent]
 })

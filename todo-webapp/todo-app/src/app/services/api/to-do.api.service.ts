@@ -1,3 +1,5 @@
+import 'rxjs/add/observable/forkJoin';
+
 import { ToDo } from './../../models/todo';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -6,12 +8,12 @@ import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
 
 @Injectable()
-export class ToDoService {
+export class ToDoAPIService {
   endPoint = `${environment.apiEndPoint}/todos`;
 
   constructor(private http: HttpClient) {}
 
-  getAllToDos(): Observable<ToDo[]> {
+  list(): Observable<ToDo[]> {
     return this.http.get<ToDo[]>(this.endPoint);
   }
 
@@ -23,7 +25,11 @@ export class ToDoService {
     return this.http.put<ToDo[]>(this.endPoint, toDo);
   }
 
-  deleteList(toDo: number[]): Observable<void> {
-    return this.http.post<void>(`${this.endPoint}/delete`, toDo);
+  deleteList(toDoIdList: number[]): Observable<void[]> {
+    return Observable.forkJoin(toDoIdList.map(id => this.delete(id)));
+  }
+
+  delete(id: number) {
+    return this.http.delete<void>(`${this.endPoint}/${id}`);
   }
 }

@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatSelectionList } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
 import { AddTodoComponent } from './add-todo/add-todo.component';
 import { ToDo } from './models/todo';
-import { ToDoService } from './services/api/to-do.service';
+import { ToDoAPIService } from './services/api/to-do.api.service';
 
 @Component({
   selector: 'app-root',
@@ -11,19 +11,23 @@ import { ToDoService } from './services/api/to-do.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  todos: ToDo[];
-
-  @ViewChild('todoList') todoList: MatSelectionList;
-
+  private todoList: ToDo[];
   private showCompleted: boolean;
 
-  constructor(public dialog: MatDialog, private toDoService: ToDoService) {}
+  constructor(public dialog: MatDialog, private api: ToDoAPIService) {}
 
   ngOnInit() {
-    this.toDoService.getAllToDos().subscribe(todos => {
-      console.log('data is ', todos);
-      this.todos = todos;
-    });
+    this.loadData();
+  }
+
+  private errorFn(e) {
+    // TODO show message box to user
+    console.log('Error occurred!!');
+    this.loadData();
+  }
+
+  private loadData() {
+    this.api.list().subscribe(todoList => (this.todoList = todoList));
   }
 
   private onAddClick() {
@@ -31,9 +35,13 @@ export class AppComponent implements OnInit {
       width: '400px'
     });
 
-    dialogRef.afterClosed().subscribe((data: ToDo) => {
-      this.toDoService.add(data).subscribe(todo => this.todos.push(todo));
-    });
+    dialogRef
+      .afterClosed()
+      .subscribe((data: ToDo) =>
+        this.api
+          .add(data)
+          .subscribe(todo => this.todoList.push(todo), this.errorFn)
+      );
   }
 
   private onChange(evt) {
@@ -43,25 +51,21 @@ export class AppComponent implements OnInit {
   private onMarkComplete(data: any[]) {
     const idList: number[] = data.map(item => item.value);
     const updateList: ToDo[] = [];
-    this.todos.forEach(todo => {
+    this.todoList.forEach(todo => {
       if (idList.indexOf(todo.id) !== -1) {
         todo.completed = true;
         updateList.push(todo);
       }
     });
-    this.toDoService.updateList(updateList).subscribe(todos => {
-      console.log('Updated todos: ', todos);
-    });
+    this.api.updateList(updateList).subscribe(todoList => {}, this.errorFn);
   }
 
   private onDelete(data: any[]) {
     const idList: number[] = data.map(item => item.value);
-    this.todos = this.todos.filter(todo => {
+    this.todoList = this.todoList.filter(todo => {
       return idList.indexOf(todo.id) === -1;
     });
 
-    this.toDoService.deleteList(idList).subscribe(todos => {
-      console.log('Delete call completed !!');
-    });
+    this.api.deleteList(idList).subscribe(_ => {}, this.errorFn);
   }
 }

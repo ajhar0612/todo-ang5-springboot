@@ -1,15 +1,18 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { ToDoService } from './to-do.service';
+import { ToDoAPIService } from './to-do.api.service';
 
 describe('ToDoService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ToDoService]
+      providers: [ToDoAPIService]
     });
   });
 
-  it('should be created', inject([ToDoService], (service: ToDoService) => {
-    expect(service).toBeTruthy();
-  }));
+  it(
+    'should be created',
+    inject([ToDoAPIService], (service: ToDoAPIService) => {
+      expect(service).toBeTruthy();
+    })
+  );
 });
