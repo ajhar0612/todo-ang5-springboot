@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
 @Component({
@@ -6,14 +6,11 @@ import { MatDialogRef } from '@angular/material';
   templateUrl: './add-todo.component.html',
   styleUrls: ['./add-todo.component.scss']
 })
-export class AddTodoComponent implements OnInit {
+export class AddTodoComponent {
   submitted: boolean;
   constructor(public dialogRef: MatDialogRef<AddTodoComponent>) {}
 
-  ngOnInit() {}
-
   onSubmit(data) {
-    console.log('data: ', data);
     this.dialogRef.close(data);
   }
 }

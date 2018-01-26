@@ -34,17 +34,17 @@ export class AppComponent implements OnInit {
   }
 
   private onAddClick() {
-    const dialogRef = this.dialog.open(ErrorBoxComponent, {
+    const dialogRef = this.dialog.open(AddTodoComponent, {
       width: '400px'
     });
 
-    dialogRef
-      .afterClosed()
-      .subscribe((data: ToDo) =>
+    dialogRef.afterClosed().subscribe((data: ToDo) => {
+      if (data.title) {
         this.api
           .add(data)
-          .subscribe(todo => this.todoList.push(todo), this.errorFn)
-      );
+          .subscribe(todo => this.todoList.push(todo), this.errorFn);
+      }
+    });
   }
 
   private onChange(evt) {
