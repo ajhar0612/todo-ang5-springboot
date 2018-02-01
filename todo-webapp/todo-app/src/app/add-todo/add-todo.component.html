@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>New Bill</h1>
+<h1 mat-dialog-title>New To Do</h1>
 
 <div mat-dialog-content class="container">
 
@@ -15,5 +15,6 @@
 
 <div mat-dialog-actions>
   <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial>Cancel</button>
-  <button mat-raised-button type="submit" [disabled]="!todoForm.form.valid || submitted" (click)="onSubmit(todoForm.value)" color="primary" >Add</button>
+  <button mat-raised-button type="submit" [disabled]="!todoForm.form.valid || submitted" (click)="onSubmit(todoForm.value)"
+    color="primary">Add</button>
 </div>
