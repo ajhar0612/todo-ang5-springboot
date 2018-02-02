@@ -16,7 +16,16 @@ export const reducers: ActionReducerMap<AppState> = {
 
 export const getToDosState = createFeatureSelector('todos');
 
-export const getAllToDos = createSelector(getToDosState, fromToDos.getToDos);
+export const getToDosEntities = createSelector(
+  getToDosState,
+  fromToDos.getToDosEntities
+);
+
+export const getAllToDos = createSelector(getToDosEntities, entities => {
+  console.log('Here');
+  return Object.keys(entities).map(id => entities[id]);
+});
+
 export const getToDosLoaded = createSelector(
   getToDosState,
   fromToDos.getToDosLoaded

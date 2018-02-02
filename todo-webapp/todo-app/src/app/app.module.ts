@@ -33,6 +33,8 @@ import { ToDoAPIService } from './services/api/to-do.api.service';
 import { reducers } from './store';
 import { effects } from './store/effects';
 
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
   : [];
@@ -65,7 +67,8 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     MatDialogModule,
 
     StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot(effects)
+    EffectsModule.forRoot(effects),
+    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [ToDoAPIService],
   entryComponents: [AddTodoComponent, ErrorBoxComponent],

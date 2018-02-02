@@ -3,13 +3,15 @@ import { ToDo } from './../../models/todo';
 import * as fromToDos from './../actions/todo.action';
 
 export interface ToDoState {
-  data: ToDo[];
+  entities: {
+    [id: number]: ToDo;
+  };
   loaded: boolean;
   loading: boolean;
 }
 
 export const initialState: ToDoState = {
-  data: [],
+  entities: {},
   loaded: false,
   loading: false
 };
@@ -28,11 +30,28 @@ export function reducer(
 
     case fromToDos.LOAD_TODOS_SUCCESS: {
       console.log(action.payload);
+      const todos = action.payload;
+      const entities = todos.reduce(
+        (
+          tempEntities: {
+            [id: number]: ToDo;
+          },
+          todo
+        ) => {
+          return {
+            ...tempEntities,
+            [todo.id]: todo
+          };
+        },
+        {
+          ...state.entities
+        }
+      );
       return {
         ...state,
         loading: false,
         loaded: true,
-        data: action.payload
+        entities
       };
     }
 
@@ -49,4 +68,4 @@ export function reducer(
 
 export const getToDosLoading = (state: ToDoState) => state.loading;
 export const getToDosLoaded = (state: ToDoState) => state.loaded;
-export const getToDos = (state: ToDoState) => state.data;
+export const getToDosEntities = (state: ToDoState) => state.entities;
