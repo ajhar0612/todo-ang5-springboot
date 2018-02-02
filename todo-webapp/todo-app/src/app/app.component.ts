@@ -5,6 +5,9 @@ import { AddTodoComponent } from './add-todo/add-todo.component';
 import { ToDo } from './models/todo';
 import { ToDoAPIService } from './services/api/to-do.api.service';
 import { ErrorBoxComponent } from './error-box/error-box.component';
+import { Store } from '@ngrx/store';
+import * as fromStore from './store';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-root',
@@ -15,10 +18,25 @@ export class AppComponent implements OnInit {
   todoList: ToDo[];
   showCompleted: boolean;
 
-  constructor(public dialog: MatDialog, private api: ToDoAPIService) {}
+  myToDo$: Observable<ToDo[]>;
+
+  constructor(
+    public dialog: MatDialog,
+    private api: ToDoAPIService,
+    private store: Store<fromStore.AppState>
+  ) {}
 
   ngOnInit() {
     this.loadData();
+    // this.store.select(state => state.todos).subscribe(state => {
+    //   console.log('Data from state: ', state);
+    // });
+
+    this.store.select(fromStore.getAllToDos).subscribe(state => {
+      console.log('Data from state 2: ', state);
+    });
+
+    this.myToDo$ = this.store.select(fromStore.getAllToDos);
   }
 
   onAddClick() {

@@ -43,4 +43,13 @@
     <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
   </button>
 
+  <div>
+    <div *ngIf="!((myToDo$ | async)?.length)">
+      No ToDo's, add one to get started.
+    </div>
+    <div *ngFor="let todo of (myToDo$ | async)">
+      {{ todo.title }}
+    </div>
+  </div>
+
 </div>

@@ -27,6 +27,15 @@ import { AppComponent } from './app.component';
 import { ToDoAPIService } from './services/api/to-do.api.service';
 import { ErrorBoxComponent } from './error-box/error-box.component';
 
+import { StoreModule, MetaReducer } from '@ngrx/store';
+import { storeFreeze } from 'ngrx-store-freeze';
+import { environment } from '../environments/environment';
+import { reducers } from './store';
+
+export const metaReducers: MetaReducer<any>[] = !environment.production
+  ? [storeFreeze]
+  : [];
+
 @NgModule({
   declarations: [AppComponent, AddTodoComponent, ErrorBoxComponent],
   imports: [
@@ -52,7 +61,9 @@ import { ErrorBoxComponent } from './error-box/error-box.component';
     MatSliderModule,
     MatSlideToggleModule,
     MatToolbarModule,
-    MatDialogModule
+    MatDialogModule,
+
+    StoreModule.forRoot(reducers, { metaReducers })
   ],
   providers: [ToDoAPIService],
   entryComponents: [AddTodoComponent, ErrorBoxComponent],
