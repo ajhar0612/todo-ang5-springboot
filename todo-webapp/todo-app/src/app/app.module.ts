@@ -21,16 +21,17 @@ import {
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EffectsModule } from '@ngrx/effects';
+import { MetaReducer, StoreModule } from '@ngrx/store';
+import { storeFreeze } from 'ngrx-store-freeze';
 
+import { environment } from '../environments/environment';
 import { AddTodoComponent } from './add-todo/add-todo.component';
 import { AppComponent } from './app.component';
-import { ToDoAPIService } from './services/api/to-do.api.service';
 import { ErrorBoxComponent } from './error-box/error-box.component';
-
-import { StoreModule, MetaReducer } from '@ngrx/store';
-import { storeFreeze } from 'ngrx-store-freeze';
-import { environment } from '../environments/environment';
+import { ToDoAPIService } from './services/api/to-do.api.service';
 import { reducers } from './store';
+import { effects } from './store/effects';
 
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
@@ -63,7 +64,8 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     MatToolbarModule,
     MatDialogModule,
 
-    StoreModule.forRoot(reducers, { metaReducers })
+    StoreModule.forRoot(reducers, { metaReducers }),
+    EffectsModule.forRoot(effects)
   ],
   providers: [ToDoAPIService],
   entryComponents: [AddTodoComponent, ErrorBoxComponent],

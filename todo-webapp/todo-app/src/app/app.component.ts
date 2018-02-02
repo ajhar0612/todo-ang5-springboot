@@ -32,11 +32,12 @@ export class AppComponent implements OnInit {
     //   console.log('Data from state: ', state);
     // });
 
-    this.store.select(fromStore.getAllToDos).subscribe(state => {
-      console.log('Data from state 2: ', state);
-    });
+    // this.store.select(fromStore.getAllToDos).subscribe(state => {
+    //   console.log('Data from state 2: ', state);
+    // });
 
     this.myToDo$ = this.store.select(fromStore.getAllToDos);
+    this.store.dispatch(new fromStore.LoadToDos());
   }
 
   onAddClick() {

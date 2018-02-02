@@ -9,13 +9,7 @@ export interface ToDoState {
 }
 
 export const initialState: ToDoState = {
-  data: [
-    {
-      id: 101,
-      title: 'Initial State',
-      completed: false
-    }
-  ],
+  data: [],
   loaded: false,
   loading: false
 };
@@ -33,10 +27,12 @@ export function reducer(
     }
 
     case fromToDos.LOAD_TODOS_SUCCESS: {
+      console.log(action.payload);
       return {
         ...state,
         loading: false,
-        loaded: true
+        loaded: true,
+        data: action.payload
       };
     }
 
